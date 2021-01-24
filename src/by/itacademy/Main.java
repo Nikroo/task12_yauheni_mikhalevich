@@ -1,13 +1,17 @@
 package by.itacademy;
 
 
+import by.itacademy.service.PasswordHash;
 import by.itacademy.service.User;
 import by.itacademy.service.UserService;
+
+import java.security.NoSuchAlgorithmException;
+import java.security.spec.InvalidKeySpecException;
 
 public class Main {
     public static void main(String[] args) {
 
-        UserService service = new UserService();
+        /*UserService service = new UserService();
 
         System.out.println(service.addUser(new User("Vania@mail.ru", "1111")));
         System.out.println(service.addUser(new User("Vania@mail.ru", "1111")));
@@ -25,6 +29,29 @@ public class Main {
 
         for (User element:service.readAll()) {
             System.out.println(element);
+        }*/
+
+        PasswordHash passwordHash = new PasswordHash();
+        String password = "qwerty123";
+        String password0 = "qwerty123";
+        String hash = null;
+        try {
+            hash = passwordHash.createHash(password);
+            System.out.println(hash);
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        } catch (InvalidKeySpecException e) {
+            e.printStackTrace();
+        }
+
+        try {
+            if(passwordHash.validatePassword(password0, hash)) {
+                System.out.println("ACCEPTED!");
+            }
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        } catch (InvalidKeySpecException e) {
+            e.printStackTrace();
         }
 
     }

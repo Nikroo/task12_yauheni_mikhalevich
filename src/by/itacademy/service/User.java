@@ -11,6 +11,7 @@ public class User {
     private Integer id;
     private String login;
     private String password;
+    private String hash;
 
     public User(Integer id, String login, String password) {
         this.id = id;
@@ -35,33 +36,10 @@ public class User {
         return password;
     }
 
-    public void hashPassword(){
+    public String getHash() { return hash; }
 
-
-
-
-
-        SecureRandom random = new SecureRandom();
-        byte[]salt = new byte[16];
-        random.nextBytes(salt);
-        KeySpec spec = new PBEKeySpec(password.toCharArray(), salt, 65536, 128);
-        SecretKeyFactory factory = null;
-        try {
-            factory = SecretKeyFactory.getInstance("PBKDF2WithHmacSHA1");
-        } catch (NoSuchAlgorithmException e) {
-            e.printStackTrace();
-        }
-        try {
-            byte[]hash = factory.generateSecret(spec).getEncoded();
-
-            for (int i = 0; i < hash.length; i++) {
-                System.out.print(hash[i]);
-            }
-            System.out.println();
-        } catch (InvalidKeySpecException e) {
-            e.printStackTrace();
-        }
-
+    public void setHash(String hash) {
+        this.hash = hash;
     }
 
     @Override

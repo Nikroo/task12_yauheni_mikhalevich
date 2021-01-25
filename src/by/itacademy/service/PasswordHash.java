@@ -18,15 +18,11 @@ public class PasswordHash {
     public static final int SALT_INDEX = 1;
     public static final int PBKDF2_INDEX = 2;
 
-    public static String createHash(String password)
-            throws NoSuchAlgorithmException, InvalidKeySpecException
-    {
+    public static String createHash(String password) throws NoSuchAlgorithmException, InvalidKeySpecException {
         return createHash(password.toCharArray());
     }
 
-    public static String createHash(char[] password)
-            throws NoSuchAlgorithmException, InvalidKeySpecException
-    {
+    public static String createHash(char[] password) throws NoSuchAlgorithmException, InvalidKeySpecException {
         // Generate a random salt
         SecureRandom random = new SecureRandom();
         byte[] salt = new byte[SALT_BYTES];
@@ -38,9 +34,7 @@ public class PasswordHash {
         return PBKDF2_ITERATIONS + ":" + toHex(salt) + ":" +  toHex(hash);
     }
 
-    private static byte[] pbkdf2(char[] password, byte[] salt, int iterations, int bytes)
-            throws NoSuchAlgorithmException, InvalidKeySpecException
-    {
+    private static byte[] pbkdf2(char[] password, byte[] salt, int iterations, int bytes) throws NoSuchAlgorithmException, InvalidKeySpecException {
         PBEKeySpec spec = new PBEKeySpec(password, salt, iterations, bytes * 8);
         SecretKeyFactory skf = SecretKeyFactory.getInstance(PBKDF2_ALGORITHM);
         return skf.generateSecret(spec).getEncoded();

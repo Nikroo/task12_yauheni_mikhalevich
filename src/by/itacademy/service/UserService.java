@@ -4,7 +4,7 @@ import by.itacademy.dao.openserver.OpenServerSqlUserDao;
 
 import java.util.List;
 
-public class UserService {
+public class UserService extends Hash {
     private UserDao userDao;
 
     public UserService() {
@@ -12,6 +12,7 @@ public class UserService {
     }
 
     public boolean addUser(User user){
+        passwordToHash(user);
         return userDao.create(user);
     }
 
@@ -24,10 +25,20 @@ public class UserService {
     }
 
     public User updateUser(Integer id, User user){
+        passwordToHash(user);
         return userDao.update(id, user);
     }
 
     public List<User> readAll(){return userDao.readAll();}
+
+
+    private void passwordToHash(User user) {
+        String goodHash = createHash(user.getPassword());
+        if(goodHash.length()>0) {
+            user.setHash(goodHash);
+        }
+    }
+
 
 
 

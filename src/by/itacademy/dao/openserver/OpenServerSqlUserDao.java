@@ -18,7 +18,7 @@ public class OpenServerSqlUserDao extends AbstractConnection implements UserDao 
                     .prepareStatement
                             ("INSERT INTO users (login, password) VALUES (?,?)");
             statement.setString(1, user.getLogin());
-            statement.setString(2, user.getPassword());
+            statement.setString(2, user.getHash());
             statement.execute();
             return true;
         } catch (MySQLIntegrityConstraintViolationException e) {
@@ -72,7 +72,7 @@ public class OpenServerSqlUserDao extends AbstractConnection implements UserDao 
             PreparedStatement statement = getConnection()
                     .prepareStatement("UPDATE users SET login=?, password=? WHERE id=?");
             statement.setString(1, user.getLogin());
-            statement.setString(2, user.getPassword());
+            statement.setString(2, user.getHash());
             statement.setString(3, id.toString());
             statement.execute();
 

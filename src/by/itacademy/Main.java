@@ -1,6 +1,7 @@
 package by.itacademy;
 
 
+import by.itacademy.dao.openserver.OpenServerSqlUserDao;
 import by.itacademy.service.Hash;
 import by.itacademy.service.PasswordHash;
 import by.itacademy.service.User;
@@ -12,7 +13,7 @@ import java.security.spec.InvalidKeySpecException;
 public class Main extends Hash {
     public static void main(String[] args) {
 
-        UserService service = new UserService();
+        UserService service = new UserService(new OpenServerSqlUserDao());
 
         User user0 = new User("Makar@tut.by", "0000");
         service.addUser(user0);

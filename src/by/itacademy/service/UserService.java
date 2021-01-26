@@ -5,25 +5,25 @@ import by.itacademy.dao.openserver.OpenServerSqlUserDao;
 import java.util.List;
 
 public class UserService {
-    private UserDao userDao;
+    private UserDao dao;
 
-    public UserService() {
-        this.userDao = new OpenServerSqlUserDao();
+    public UserService(UserDao dao) {
+        this.dao = dao;
     }
 
-    public boolean addUser(User user){ return userDao.create(user);}
+    public boolean addUser(User user){ return dao.create(user);}
 
     public boolean removeUser(User user){
-        return userDao.delete(user.getLogin(), user.getPassword());
+        return dao.delete(user.getLogin(), user.getPassword());
     }
 
     public User selectUser(String login, String password){
-        return userDao.read(login, password);
+        return dao.read(login, password);
     }
 
-    public User updateUser(Integer id, User user){ return userDao.update(id, user);}
+    public User updateUser(Integer id, User user){ return dao.update(id, user);}
 
-    public List<User> readAll(){return userDao.readAll();}
+    public List<User> readAll(){return dao.readAll();}
 
 
 

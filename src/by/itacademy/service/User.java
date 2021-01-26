@@ -1,17 +1,10 @@
 package by.itacademy.service;
 
-import javax.crypto.SecretKeyFactory;
-import javax.crypto.spec.PBEKeySpec;
-import java.security.NoSuchAlgorithmException;
-import java.security.SecureRandom;
-import java.security.spec.InvalidKeySpecException;
-import java.security.spec.KeySpec;
-
-public class User {
+public class User extends Hash {
     private Integer id;
     private String login;
     private String password;
-    private String hash;
+    private String hash = "0";
 
     public User(Integer id, String login, String password) {
         this.id = id;
@@ -20,6 +13,7 @@ public class User {
     }
 
     public User(String login, String password) {
+        this.hash = createHash(password);
         this.login = login;
         this.password = password;
     }
@@ -37,10 +31,6 @@ public class User {
     }
 
     public String getHash() { return hash; }
-
-    public void setHash(String hash) {
-        this.hash = hash;
-    }
 
     @Override
     public String toString() {
